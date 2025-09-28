@@ -6,8 +6,12 @@ app.get('/', (req, res) => {
   res.send('Hello Jenkins + Node.js!');
 });
 
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
+// Only start server if not in test mode
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`App listening at http://localhost:${port}`);
+  });
+}
 
 module.exports = app;
+
