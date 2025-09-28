@@ -1,0 +1,43 @@
+Pipelinei {
+    agent any
+
+    tools {
+        nodejs 'nodejs'   // Must match the NodeJS installation name in Jenkins Global Tool Configuration
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-repo/nodejs-app.git'
+            }
+        }
+
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Runs Jest tests
+                sh 'npm test'
+            }
+        }
+
+        stage('Run') {
+            steps {
+                // Runs the sample Express app
+                sh 'npm start & sleep 5'
+                sh 'curl http://localhost:3000'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished. Cleaning up...'
+            sh 'pkill node || true'
+        }
+    }
+}
