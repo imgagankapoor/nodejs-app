@@ -1,8 +1,8 @@
-Pipelinei {
+pipeline {
     agent any
 
     tools {
-        nodejs 'nodejs'   // Must match the NodeJS installation name in Jenkins Global Tool Configuration
+        nodejs 'nodejs'
     }
 
     stages {
